@@ -111,10 +111,11 @@ func resetCard() -> void:
 	played = false
 
 func _to_string() -> String:
-	var return_string = "Value: %s Suit: %s Attribute: %s Type: %s Edition: %s Seal: %s"
+	var return_string = "Value: %s Suit: %s Attribute: %s Type: %s Edition: %s Seal: %s Face Card: %s"
 	return return_string % [Enums.CardValues.find_key(value).rpad(13), \
 	 						Enums.CardSuits.find_key(suit).rpad(13), \
 							Enums.CardAttributes.find_key(attribute).rpad(13), \
 							Enums.CardTypes.find_key(type).rpad(13), \
 							Enums.CardEditions.find_key(edition).rpad(13), \
-							Enums.CardSeals.find_key(seal).rpad(13)]
+							Enums.CardSeals.find_key(seal).rpad(13), \
+							Enums.FaceCards.find_key(faceCard)]

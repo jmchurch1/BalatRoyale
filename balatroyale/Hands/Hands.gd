@@ -1,36 +1,51 @@
 class_name Hands
 
 var handLevels = {}
+"""
+Flush Five	15 mult, 150 chip
+Flush House	14 mult, 140 chip
+Five of a Kind	12 mult, 120 chip
+Royal Flush ???
+Straight Flush	10 mult, 100 chip
+Four of a Kind	8 mult, 60 chip
+Straight	4 mult, 35 chip
+Full house	4 mult, 40 chip
+Flush	3 mult, 35 chip
+Three of a Kind	3 mult, 30 chip
+Two Pair	2 mult, 20 chip
+Pair	2 mult, 15 chip
+High Card	1 mult, 10 chip
+"""
 var handValues = {
-	Enums.HandTypes.FlushFive : [160,16],
+	Enums.HandTypes.FlushFive : [150,15],
 	Enums.HandTypes.FlushHouse : [140,14],
 	Enums.HandTypes.FiveOfAKind : [120,12],
-	Enums.HandTypes.RoyalFlush : [100,8],
-	Enums.HandTypes.StraightFlush : [100,8],
-	Enums.HandTypes.FourOfAKind : [60,7],
+	Enums.HandTypes.RoyalFlush : [100,10],
+	Enums.HandTypes.StraightFlush : [100,10],
+	Enums.HandTypes.FourOfAKind : [60,8],
 	Enums.HandTypes.FullHouse : [40,4],
-	Enums.HandTypes.Flush : [35,4],
-	Enums.HandTypes.Straight : [30,4],
+	Enums.HandTypes.Flush : [35,3],
+	Enums.HandTypes.Straight : [35,4],
 	Enums.HandTypes.ThreeOfAKind : [30,3],
 	Enums.HandTypes.TwoPair : [20,2],
-	Enums.HandTypes.Pair : [10,2],
-	Enums.HandTypes.HighCard : [5,1]
+	Enums.HandTypes.Pair : [15,2],
+	Enums.HandTypes.HighCard : [10,1]
 } as Dictionary
 
 var handIncrease = {
-	Enums.HandTypes.FlushFive : [160,16],
+	Enums.HandTypes.FlushFive : [150,15],
 	Enums.HandTypes.FlushHouse : [140,14],
 	Enums.HandTypes.FiveOfAKind : [120,12],
 	Enums.HandTypes.RoyalFlush : [100,8],
-	Enums.HandTypes.StraightFlush : [100,8],
-	Enums.HandTypes.FourOfAKind : [60,7],
+	Enums.HandTypes.StraightFlush : [100,10],
+	Enums.HandTypes.FourOfAKind : [60,8],
 	Enums.HandTypes.FullHouse : [40,4],
-	Enums.HandTypes.Flush : [35,4],
-	Enums.HandTypes.Straight : [30,4],
+	Enums.HandTypes.Flush : [35,3],
+	Enums.HandTypes.Straight : [35,4],
 	Enums.HandTypes.ThreeOfAKind : [30,3],
 	Enums.HandTypes.TwoPair : [20,2],
-	Enums.HandTypes.Pair : [10,2],
-	Enums.HandTypes.HighCard : [5,1]
+	Enums.HandTypes.Pair : [15,2],
+	Enums.HandTypes.HighCard : [10,1]
 } as Dictionary
 
 func _init() -> void:

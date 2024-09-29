@@ -12,13 +12,12 @@ var money = 0
 var mult = 1.0
 var chips = 0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init(cards :Array[Card]) -> void:
 	hand = Hand.new()
 	handManager = Hands.new()
-	print("Adding random cards for testing")
-	for i in range(maxCards):
-		addRandomCard()
+	print("Adding cards from hand")
+	for card in cards:
+		addCard(card)
 	scoreHand()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,7 +25,9 @@ func _process(delta: float) -> void:
 	pass
 
 func scoreHand():
-	handManager.findBestHand(hand)
+	var handScore = handManager.findBestHand(hand)
+	chips += handScore[0]
+	mult += handScore[1]
 	for card in hand.cards:
 		card.played = true
 		var cardScore = card.score(CardScore.new(money, chips, mult))

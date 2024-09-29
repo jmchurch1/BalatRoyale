@@ -5,10 +5,7 @@ var cards :Array[Card]
 func _init(full_deck=true) -> void:
 	if (full_deck):
 		populateFullDeck()
-	print("--- FULLY POPULATED BASE DECK ---")
-	for card in cards:
-		print(card.to_string())
-	pass
+		shuffleDeck()
 
 func populateFullDeck() -> void:
 	for i in range(0, 3):
@@ -22,5 +19,23 @@ func populateFullDeck() -> void:
 func addCard(card :Card) -> void:
 	cards.append(card)
 
+func getFirstCard() -> Card:
+	var temporaryDeck = cards.duplicate()
+	cards.remove_at(0)
+	return temporaryDeck[0]
+
 func shuffleDeck() -> void:
-	pass
+	var temporaryDeck = cards.duplicate()
+	for i in range(cards.size()):
+		var randomIndex = randi_range(0, temporaryDeck.size() - 1)
+		cards[i] = temporaryDeck[randomIndex]
+		temporaryDeck.remove_at(randomIndex)
+
+func is_empty() -> bool:
+	return cards.is_empty()
+	
+func _to_string() -> String:
+	var return_string = "--- CURRENT DECK ---"
+	for card in cards:
+		return_string+="\n"+card.to_string()
+	return return_string
