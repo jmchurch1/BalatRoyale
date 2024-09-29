@@ -1,6 +1,8 @@
 class_name Card
 extends Node
+@onready var main = get_node("Main") as Main
 
+var parentHand: Hand
 var played: bool
 var dead: bool
 var redSealTriggered: bool
@@ -105,6 +107,21 @@ func score(score: CardScore) -> CardScore:
 			print("PURPLE")
 			## MAKE A TAROT CARD
 	return score
+
+var MouseOver = false
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if MouseOver == true:
+			main.activateGameHandCard()
+
+func _on_Area2D_mouse_entered():
+	#Mouse is in
+	MouseOver = true
+
+func _on_Area2D_mouse_exited():
+	#Mouse is out
+	MouseOver = false
 
 func resetCard() -> void:
 	redSealTriggered = false

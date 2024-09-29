@@ -135,3 +135,12 @@ enum HandTypes {
 	Pair,
 	HighCard
 }
+
+enum Parents {
+	GAME,
+	PLAYER_ONE,
+	PLAYER_TWO,
+	PLAYER_THREE,
+	PLAYER_FOUR
+	
+}

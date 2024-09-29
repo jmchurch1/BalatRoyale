@@ -62,6 +62,8 @@ func updateHandValue(handType :Enums.HandTypes) -> void:
 	
 func findBestHand(hand: Hand) -> Array:
 	var possibleHands :Array
+	if (hand.cards.is_empty()):
+		return [0,0]
 	if checkFlushFive(hand):
 		possibleHands.append(Enums.HandTypes.FlushFive)
 	if checkFlushHouse(hand):
@@ -139,7 +141,7 @@ func checkStraightFlush(hand :Hand) -> bool:
 	while true:
 		if (iterations >= 5):
 			return true
-		var nextValue = hand.lowCard + iterations
+		var nextValue = hand.lowCardValue + iterations
 		var foundNextValue = false
 		for card in copyCards:
 			if(card.value == nextValue):
@@ -179,7 +181,7 @@ func checkStraight(hand :Hand) -> bool:
 	while true:
 		if (iterations >= 5):
 			return true
-		var nextValue = hand.lowCard + iterations
+		var nextValue = hand.lowCardValue + iterations
 		var foundNextValue = false
 		for card in copyCards:
 			if(card.value == nextValue):

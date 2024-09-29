@@ -1,6 +1,7 @@
 class_name Player
 extends Node
 
+var playerType :Enums.Parents
 var jokers :Array[Joker]
 var handManager :Hands
 var hand :Hand
@@ -12,17 +13,14 @@ var money = 0
 var mult = 1.0
 var chips = 0
 
-func _init(cards :Array[Card]) -> void:
+func _init(cards :Array[Card], playerType: Enums.Parents) -> void:
+	playerType = playerType
 	hand = Hand.new()
 	handManager = Hands.new()
 	print("Adding cards from hand")
 	for card in cards:
 		addCard(card)
 	scoreHand()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func scoreHand():
 	var handScore = handManager.findBestHand(hand)

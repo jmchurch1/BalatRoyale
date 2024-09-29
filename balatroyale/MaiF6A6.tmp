@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca2056k84k8ul"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_kifpx"]
+[ext_resource type="Script" path="res://GameClasses/GameHand.gd" id="2_4uufo"]
+[ext_resource type="Texture2D" uid="uid://de7pibjenffd6" path="res://Art/temporary_assets/layoutMockup1.png" id="2_uohgl"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_kifpx")
+gameHandSize = 25
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(959, 537)
+
+[node name="GameHand2" type="Node2D" parent="."]
+top_level = true
+position = Vector2(577, 540)
+script = ExtResource("2_4uufo")
+spreadAmount = 15.0
+rotateAmount = 0.07
+cardScale = 0.1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(-0.103449, 0.0295569)
+scale = Vector2(1.78813, 1.78813)
+texture = ExtResource("2_uohgl")
+centered = false
+
+[node name="GameHand" type="Node2D" parent="CanvasLayer"]
+top_level = true
+position = Vector2(1093, 948)
+script = ExtResource("2_4uufo")
+spreadAmount = 22.0
+rotateAmount = 0.06
+cardScale = 0.15
+
+[node name="PlayerHand" type="Node2D" parent="CanvasLayer"]
