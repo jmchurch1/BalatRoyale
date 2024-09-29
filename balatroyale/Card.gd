@@ -2,21 +2,36 @@ class_name Card
 extends Node
 
 var played: bool
-var seal: seals
-var edition: cardEditions
-var type: cardTypes
-var attribute: attributes
-var value: cardValues
-var suit: suits
-var dead = false
+var dead: bool
+var redSealTriggered: bool
+var seal: Enums.CardSeals
+var edition: Enums.CardEditions
+var type: Enums.CardTypes
+var attribute: Enums.CardAttributes
+var value: Enums.CardValues
+var suit: Enums.CardSuits
+var faceCard: Enums.FaceCards
 
-func _init(newValue, newSuit, newAttribute, newType, newEdition, newSeal):
+"""
+@param newValue :Enums.CardValues
+@param newSuit :Enums.CardSuits
+@param newAttribute :Enums.CardAttribute
+@param newType :Enums.CardTypes
+@param newEdition :Enums.CardEditions
+@param newSeal :Enums.CardSeals
+"""
+func _init(newValue, newSuit, newAttribute, newType, newEdition, newSeal, newFaceCard=Enums.FaceCards.UNINITIALIZED):
 	value = newValue
 	suit = newSuit
 	attribute = newAttribute
 	type = newType
 	edition = newEdition
 	seal = newSeal
+	faceCard = newFaceCard
+	
+	played = false
+	dead = false
+	redSealTriggered = false
 
 """
 score
@@ -27,66 +42,79 @@ func score(score: CardScore) -> CardScore:
 	score.value += value
 	
 	match attribute:
-		attributes.BASE:
-			print("BASE")
-		attributes.BONUS:
+		Enums.CardAttributes.BONUS:
 			print("BONUS")
 			score.value += 30
-		attributes.MULT:
+		Enums.CardAttributes.MULT:
 			print("MULT")
-			score.addMult(MultType.ADDITION, 4)
-		attributes.GLASS:
+			score.addMult(Enums.MultType.ADD, 4)
+		Enums.CardAttributes.GLASS:
 			print("GLASS")
-			score.addMult(MultType.MULTIPLY, 2)
+			score.addMult(Enums.MultType.MULTIPLY, 2)
 			var randDeath = randi_range(1, 4)
 			if randDeath == 1:
+				print("card died :SOB:")
 				dead = true
-		attributes.STEEL:
+		Enums.CardAttributes.STEEL:
 			print("STEEL")
 			if !played:
-				score.addMult(MultType.MULTIPLY, 1.5)
-		attributes.STONE:
+				score.addMult(Enums.MultType.MULTIPLY, 1.5)
+		Enums.CardAttributes.STONE:
 			print("STONE")
 			score.value += 50
-		attributes.GOLD:
+		Enums.CardAttributes.GOLD:
 			print("GOLD")
 			score.money += 3
-		attributes.LUCKY:
+		Enums.CardAttributes.LUCKY:
 			print("LUCKY")
 			var randMult = randi_range(1,5)
 			var randMoney = randi_range(1,15)
 			if randMult == 1:
-				score.addMult(MultType.ADDITION, 20)
+				score.addMult(Enums.MultType.ADD, 20)
 			if randMoney == 1:
 				score.money += 20
 	
 	match edition:
-		cardEditions.BASE:
+		Enums.CardEditions.BASE:
 			print("BASE")
-		cardEditions.FOIL:
+		Enums.CardEditions.FOIL:
 			print("FOIL")
 			score.value += 50 
-		cardEditions.HOLOGRAPHIC:
+		Enums.CardEditions.HOLOGRAPHIC:
 			print("HOLOGRAPHIC")
-			score.addMult(MultType.ADDITION, 10)
-		cardEditions.POLYCHROME:
+			score.addMult(Enums.MultType.ADD, 10)
+		Enums.CardEditions.POLYCHROME:
 			print("POLYCHROME")
-			score.addMult(MultType.MULTIPLY, 1.5)
+			score.addMult(Enums.MultType.MULTIPLY, 1.5)
 	
 	match seal:
-		seals.BASE:
+		Enums.CardSeals.BASE:
 			print("BASE")
-		seals.GOLD:
+		Enums.CardSeals.GOLD:
 			print("GOLD")
 			score.money += 3
-		seals.RED:
+		Enums.CardSeals.RED:
 			print("RED")
-			score = score(score)
-		seals.BLUE:
+			if !redSealTriggered:
+				redSealTriggered = true
+				score = score(score)
+		Enums.CardSeals.BLUE:
 			print("BLUE")
 			## MAKE A PLANET CARD
-		seals.PURPLE:
+		Enums.CardSeals.PURPLE:
 			print("PURPLE")
 			## MAKE A TAROT CARD
-	
 	return score
+
+func resetCard() -> void:
+	redSealTriggered = false
+	played = false
+
+func _to_string() -> String:
+	var return_string = "Value: %s Suit: %s Attribute: %s Type: %s Edition: %s Seal: %s"
+	return return_string % [Enums.CardValues.find_key(value).rpad(13), \
+	 						Enums.CardSuits.find_key(suit).rpad(13), \
+							Enums.CardAttributes.find_key(attribute).rpad(13), \
+							Enums.CardTypes.find_key(type).rpad(13), \
+							Enums.CardEditions.find_key(edition).rpad(13), \
+							Enums.CardSeals.find_key(seal).rpad(13)]

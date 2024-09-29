@@ -1,35 +1,21 @@
 class_name Enums
 enum MultType {
 	MULTIPLY,
-	ADDITION
+	ADD
 }
 
-"""
-BASE:
-	No extra effects
-GOLD:
-	Earn $3 when this card is played and scores
-RED:
-	Retrigger this card 1 time. As well as when being scored in a poker hand.
-BLUE:
-	If this card is held at end of round, it creates the Planet card matching the final poker hand played, if you have room
-PURPLE:
-	Creates a Tarot card when discarded, if you have room. Can be from player-elected discards, or from the automatic discard of The Hook boss blind.
-"""
-enum Seals {
-	BASE, 
-	GOLD, 
-	RED, 
-	BLUE, 
-	PURPLE
-}
-
-enum Suits {
+enum CardSuits {
 	CLUBS, 
 	HEARTS, 
 	DIAMONDS, 
 	SPADES, 
 	WILD
+}
+
+enum CardTypes {
+	BASE,
+	FACE,
+	ACE
 }
 
 enum CardValues {
@@ -43,7 +29,15 @@ enum CardValues {
 	SEVEN, 
 	EIGHT, 
 	NINE, 
-	TEN
+	TEN,
+	ELEVEN
+}
+
+enum FaceCards {
+	UNINITIALIZED,
+	JACK,
+	QUEEN,
+	KING
 }
 
 """
@@ -103,9 +97,41 @@ enum CardAttributes {
 	LUCKY
 }
 
-var MultTypeArray = MultType.keys()
-var SealsArray = Seals.keys()
-var SuitsArray = Suits.keys()
-var CardValuesArray = CardValues.keys()
-var CardEditionsArray = CardEditions.keys()
-var CardAttributesArray = CardAttributes.keys()
+"""
+BASE:
+	No extra effects
+GOLD:
+	Earn $3 when this card is played and scores
+RED:
+	Retrigger this card 1 time. As well as when being scored in a poker hand.
+BLUE:
+	If this card is held at end of round, it creates the Planet card matching the final poker hand played, if you have room
+PURPLE:
+	Creates a Tarot card when discarded, if you have room. Can be from player-elected discards, or from the automatic discard of The Hook boss blind.
+"""
+enum CardSeals {
+	BASE, 
+	GOLD, 
+	RED, 
+	BLUE, 
+	PURPLE
+}
+
+"""
+https://balatrogame.fandom.com/wiki/Poker_Hands
+"""
+enum HandTypes {
+	FlushFive,
+	FlushHouse,
+	FiveOfAKind,
+	RoyalFlush,
+	StraightFlush,
+	FourOfAKind,
+	FullHouse,
+	Flush,
+	Straight,
+	ThreeOfAKind,
+	TwoPair,
+	Pair,
+	HighCard
+}
