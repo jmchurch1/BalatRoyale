@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6abwsbvxws2f"]
+
+[ext_resource type="Script" path="res://MultiplayerTest/lobby_buttons.gd" id="1_p185d"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p185d")
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 603.0
+offset_top = 238.0
+offset_right = 802.0
+offset_bottom = 315.0
+text = "Join"
+
+[node name="Create" type="Button" parent="."]
+layout_mode = 0
+offset_left = 196.0
+offset_top = 233.0
+offset_right = 404.0
+offset_bottom = 320.0
+text = "Create"
+
+[node name="EnterNameHere" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 467.0
+offset_top = 414.0
+offset_right = 607.0
+offset_bottom = 444.0
+placeholder_text = "Enter name here"
+
+[node name="EnterIPAddressToJoin" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 834.0
+offset_top = 241.0
+offset_right = 1112.0
+offset_bottom = 314.0
+placeholder_text = "Enter IP Address"
+
+[node name="StartGame" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 249.0
+offset_top = 331.0
+offset_right = 345.0
+offset_bottom = 362.0
+text = "Start Game"
+
+[node name="ConnectedPlayers" type="Label" parent="."]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 14.0
+offset_right = 209.0
+offset_bottom = 89.0
+text = "Connected Players:"
+
+[connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Create" to="." method="_on_create_pressed"]
+[connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]

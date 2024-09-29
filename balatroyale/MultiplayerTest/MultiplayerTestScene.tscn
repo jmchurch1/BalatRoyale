@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs12x7ovgkirm"]
+
+[ext_resource type="Script" path="res://MultiplayerTest/multiplayer_test_scene.gd" id="1_4wgn7"]
+
+[node name="MultiplayerTestScene" type="Node2D"]
+script = ExtResource("1_4wgn7")

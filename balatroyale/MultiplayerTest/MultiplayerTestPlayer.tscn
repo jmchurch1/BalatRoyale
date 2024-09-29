@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0qu5qr34w67v"]
+
+[ext_resource type="Script" path="res://MultiplayerTest/multiplayer_test_player.gd" id="1_bpoyf"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1i5tr"]
+properties/0/path = NodePath("ColorRect:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="MultiplayerTestPlayer" type="Node2D"]
+script = ExtResource("1_bpoyf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.734386, 0.322782, 0.538741, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1i5tr")
