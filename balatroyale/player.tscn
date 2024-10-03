@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://b374ofy5eq3gy"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_0ik4s"]
+[ext_resource type="Script" path="res://Hands/Hand.gd" id="2_uc7d2"]
+
+[node name="Player" type="Node" node_paths=PackedStringArray("hand")]
+script = ExtResource("1_0ik4s")
+hand = NodePath("CanvasLayer/PlayerHand")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer"]
+position = Vector2(959, 537)
+
+[node name="PlayerHand" type="Node2D" parent="CanvasLayer"]
+position = Vector2(955, 531)
+script = ExtResource("2_uc7d2")
+spreadAmount = 100.0
+rotateAmount = 0.05
+cardScale = 0.3

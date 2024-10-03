@@ -1,10 +1,9 @@
 class_name Player
 extends Node
 
-var playerType :Enums.Parents
+@export var hand :Hand
 var jokers :Array[Joker]
 var handManager :Hands
-var hand :Hand
 var maxCards = 5
 var minCards = 0
 var maxJokers = 5
@@ -13,14 +12,8 @@ var money = 0
 var mult = 1.0
 var chips = 0
 
-func _init(cards :Array[Card], playerType: Enums.Parents) -> void:
-	playerType = playerType
-	hand = Hand.new()
+func _init() -> void:
 	handManager = Hands.new()
-	print("Adding cards from hand")
-	for card in cards:
-		addCard(card)
-	scoreHand()
 
 func scoreHand():
 	var handScore = handManager.findBestHand(hand)
@@ -47,6 +40,15 @@ func addJoker(joker: Joker) -> void:
 func addCard(card: Card) -> void:
 	hand.addCard(card)
 	print(card.to_string())
+
+func removeCard(card: Card) -> void:
+	var playerCard = hand.contains(card)
+	if null != playerCard:
+		hand.remove(playerCard)
+
+func addCards(cards :Array[Card]) -> void:
+	for card in cards:
+		addCard(card)
 
 func addRandomCard() -> void:
 	var CardValuesArray = Enums.CardValues.keys()

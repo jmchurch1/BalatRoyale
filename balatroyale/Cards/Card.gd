@@ -1,8 +1,8 @@
 class_name Card
-extends Node
-@onready var main = get_node("Main") as Main
+extends TextureButton
 
-var parentHand: Hand
+var gameHand: Hand
+var player: Player
 var played: bool
 var dead: bool
 var redSealTriggered: bool
@@ -13,6 +13,7 @@ var attribute: Enums.CardAttributes
 var value: Enums.CardValues
 var suit: Enums.CardSuits
 var faceCard: Enums.FaceCards
+var button: TextureButton
 
 """
 @param newValue :Enums.CardValues
@@ -110,22 +111,46 @@ func score(score: CardScore) -> CardScore:
 
 var MouseOver = false
 
-func _input(event):
-	if event is InputEventMouseButton:
-		if MouseOver == true:
-			main.activateGameHandCard()
+func makeButtonFunctionality():
+	var name = ""
+	match self.type:
+		Enums.CardTypes.BASE:
+			name = String.num_uint64(value)
+		Enums.CardTypes.ACE:
+			name = "ACE"
+		Enums.CardTypes.FACE:
+			name = Enums.FaceCards.find_key(faceCard)
+	
+	pressed.connect(self._button_pressed)
+	var path = "res://Art/temporary_cards/%s_%s.png" % \
+			[name, Enums.CardSuits.find_key(suit)]
+	texture_normal = load(path)
+	texture_pressed = load(path)
+	texture_hover = load(path)
+	texture_disabled = load(path)
 
-func _on_Area2D_mouse_entered():
-	#Mouse is in
-	MouseOver = true
-
-func _on_Area2D_mouse_exited():
-	#Mouse is out
-	MouseOver = false
+func _button_pressed():
+	if (player.hand.cards.size() < player.maxCards && !played):
+		played = true
+		var card = Card.new(self.value, self.suit, self.attribute, 
+			self.type, self.edition, self.seal, self.faceCard) 
+		card.makeButtonFunctionality()
+		player.addCard(card)
+		gameHand.deactivateGameHandCard(self)
+	elif (played):
+		player.removeCard(self)
+		gameHand.activateGamehandCard(self)
+		played = false
 
 func resetCard() -> void:
 	redSealTriggered = false
 	played = false
+
+func _equals(other :Card) -> bool:
+	return self.value == other.value && self.suit == other.suit && \
+		self.attribute == other.attribute && self.type == other.type && \
+		self.edition == other.edition && self.seal == other.seal && \
+		self.faceCard == other.faceCard
 
 func _to_string() -> String:
 	var return_string = "Value: %s Suit: %s Attribute: %s Type: %s Edition: %s Seal: %s Face Card: %s"
