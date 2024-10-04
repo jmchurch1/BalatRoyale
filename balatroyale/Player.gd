@@ -2,6 +2,9 @@ class_name Player
 extends Node
 
 @export var hand :Hand
+@export var chipsLabel :RichTextLabel
+@export var multLabel :RichTextLabel
+@export var handLabel :RichTextLabel
 var jokers :Array[Joker]
 var handManager :Hands
 var maxCards = 5
@@ -21,14 +24,20 @@ func scoreHand():
 	mult += handScore[1]
 	for card in hand.cards:
 		card.played = true
+		card.self_modulate = Color.YELLOW
 		var cardScore = card.score(CardScore.new(money, chips, mult))
 		print(cardScore.to_string())
 		addScore(cardScore)
+		await get_tree().create_timer(0.5).timeout
 
 func addScore(cardScore :CardScore) -> void:
 	money = cardScore.money
 	chips = cardScore.value
 	mult = cardScore.mult
+	chipsLabel.clear()
+	multLabel.clear()
+	chipsLabel.add_text(String.num_int64(cardScore.value))
+	multLabel.add_text(String.num(mult))
 	var return_string = "%s X %s \n Money: %s"
 	print(return_string % [String.num_int64(chips), String.num(mult), String.num_int64(money)])
 
@@ -39,7 +48,16 @@ func addJoker(joker: Joker) -> void:
 
 func addCard(card: Card) -> void:
 	hand.addCard(card)
-	print(card.to_string())
+	handManager.findBestHand(hand)
+	var bestHand = handManager.bestHand
+	handLabel.clear()
+	var handText = "%s lvl.%s" % \
+		[Enums.HandTypes.find_key(bestHand), \
+		String.num_int64(handManager.handLevels.get(bestHand))]
+	handLabel.add_text(handText)
+	
+	if (hand.cards.size() == maxCards):
+		scoreHand()
 
 func removeCard(card: Card) -> void:
 	var playerCard = hand.contains(card)

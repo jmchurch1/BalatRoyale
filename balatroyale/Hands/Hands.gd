@@ -1,6 +1,6 @@
 class_name Hands
 
-var handLevels = {}
+var bestHand = -1
 """
 Flush Five	15 mult, 150 chip
 Flush House	14 mult, 140 chip
@@ -48,6 +48,22 @@ var handIncrease = {
 	Enums.HandTypes.HighCard : [10,1]
 } as Dictionary
 
+var handLevels = {
+	Enums.HandTypes.FlushFive : 1,
+	Enums.HandTypes.FlushHouse : 1,
+	Enums.HandTypes.FiveOfAKind : 1,
+	Enums.HandTypes.RoyalFlush : 1,
+	Enums.HandTypes.StraightFlush : 1,
+	Enums.HandTypes.FourOfAKind : 1,
+	Enums.HandTypes.FullHouse : 1,
+	Enums.HandTypes.Flush : 1,
+	Enums.HandTypes.Straight : 1,
+	Enums.HandTypes.ThreeOfAKind : 1,
+	Enums.HandTypes.TwoPair : 1,
+	Enums.HandTypes.Pair : 1,
+	Enums.HandTypes.HighCard : 1
+} as Dictionary
+
 func _init() -> void:
 	# initailize hands with starting level of 1
 	for handType in Enums.HandTypes.keys():
@@ -92,15 +108,16 @@ func findBestHand(hand: Hand) -> Array:
 		possibleHands.append(Enums.HandTypes.HighCard)
 	
 	var highestCombo = [0, 0]
-	var bestHandType :Enums.HandTypes
+	var tmpBest :int
 	for handType in possibleHands:
 		var newCombo = handValues.get(handType)
 		if newCombo[0] * newCombo[1] > highestCombo[0] * highestCombo[1]:
 			highestCombo = newCombo
-			bestHandType = handType
+			tmpBest = handType
 	
+	self.bestHand = tmpBest
 	print("The best hand was %s with a combo of %s X %s" % \
-		[Enums.HandTypes.find_key(bestHandType), \
+		[Enums.HandTypes.find_key(self.bestHand), \
 		String.num_int64(highestCombo[0]), \
 		String.num_int64(highestCombo[1])])
 	
@@ -170,7 +187,7 @@ func checkFullHouse(hand :Hand) -> bool:
 	return false
 
 func checkFlush(hand :Hand) -> bool:
-	return checkSameSuit(hand)
+	return checkSameSuit(hand) && hand.cards.size() >= 5
 
 # check if a hand has a straight in it
 func checkStraight(hand :Hand) -> bool:
