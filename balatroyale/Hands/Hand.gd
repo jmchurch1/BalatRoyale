@@ -23,7 +23,9 @@ func addCards(newCards :Array[Card]) -> void:
 
 #NOTE: need to do some sprite removal here
 func removeCard(card: Card) -> void:
-	cards.remove_at(cards.find(card))
+	var index = cards.find(card)
+	cards[index].queue_free()
+	cards.remove_at(index)
 	
 
 func addCard(card :Card) -> void:
@@ -51,15 +53,10 @@ func addCard(card :Card) -> void:
 func deactivateGameHandCard(card :Card) -> void:
 	card.position += Vector2(0, -20)
 	card.self_modulate = Color.AQUA
-	#var iteration = 0
-	#for c in cards:
-		#var x = iteration * spreadAmount
-		#if (cards.size() % 2 == 0):
-			#x *= -1
-		#
-		#c.position = Vector2(x, 0)
-		#c.rotation += randf_range(-rotateAmount, rotateAmount)
-		#iteration+=1
+
+func activateGameHandCard(card :Card) -> void:
+	card.position -= Vector2(0, -20)
+	card.self_modulate = Color.WHITE
 
 func contains(other :Card) -> Card:
 	for card in cards:

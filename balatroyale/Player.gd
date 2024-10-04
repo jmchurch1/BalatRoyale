@@ -44,7 +44,7 @@ func addCard(card: Card) -> void:
 func removeCard(card: Card) -> void:
 	var playerCard = hand.contains(card)
 	if null != playerCard:
-		hand.remove(playerCard)
+		hand.removeCard(playerCard)
 
 func addCards(cards :Array[Card]) -> void:
 	for card in cards:

@@ -132,19 +132,21 @@ func makeButtonFunctionality():
 func _button_pressed():
 	if (player.hand.cards.size() < player.maxCards && !played):
 		played = true
-		var card = Card.new(self.value, self.suit, self.attribute, 
-			self.type, self.edition, self.seal, self.faceCard) 
-		card.makeButtonFunctionality()
+		var card = cardReference()
 		player.addCard(card)
 		gameHand.deactivateGameHandCard(self)
 	elif (played):
-		player.removeCard(self)
-		gameHand.activateGamehandCard(self)
+		player.removeCard(cardReference())
+		gameHand.activateGameHandCard(self)
 		played = false
 
 func resetCard() -> void:
 	redSealTriggered = false
 	played = false
+
+func cardReference() -> Card:
+	return Card.new(self.value, self.suit, self.attribute, \
+			self.type, self.edition, self.seal, self.faceCard)  
 
 func _equals(other :Card) -> bool:
 	return self.value == other.value && self.suit == other.suit && \
