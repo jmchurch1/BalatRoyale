@@ -19,7 +19,7 @@ follow_viewport_enabled = true
 position = Vector2(959, 537)
 
 [node name="PlayerHand" type="Node2D" parent="CanvasLayer"]
-position = Vector2(955, 629)
+position = Vector2(991, 665)
 script = ExtResource("2_uc7d2")
 spreadAmount = 100.0
 rotateAmount = 0.05
@@ -48,6 +48,7 @@ text = "Chips                X               MULT"
 [node name="Chips" type="RichTextLabel" parent="CanvasLayer/Score"]
 clip_contents = false
 custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
 offset_left = 2.0
 offset_top = 40.0
 offset_right = 99.0
@@ -59,6 +60,7 @@ size_flags_vertical = 3
 [node name="Mult" type="RichTextLabel" parent="CanvasLayer/Score"]
 clip_contents = false
 custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
 offset_left = 138.0
 offset_top = 35.0
 offset_right = 265.0
@@ -70,6 +72,7 @@ size_flags_vertical = 3
 [node name="X" type="RichTextLabel" parent="CanvasLayer/Score"]
 clip_contents = false
 custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
 offset_left = 109.0
 offset_top = 35.0
 offset_right = 159.0

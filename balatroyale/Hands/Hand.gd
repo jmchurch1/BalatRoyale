@@ -35,8 +35,6 @@ func addCard(card :Card) -> void:
 		lowCard = card
 	
 	var x = cards.size() * spreadAmount
-	if (cards.size() % 2 == 0):
-		x *= -1
 	
 	card.position = Vector2(x, 0)
 	card.rotation += randf_range(-rotateAmount, rotateAmount)
@@ -49,6 +47,15 @@ func addCard(card :Card) -> void:
 	card.player = player
 	card.gameHand = self
 	add_child(card)
+	
+	placeCards()
+
+func placeCards() -> void:
+	var startingPos = -cards.size() * (cards[0].size[1]/40 + spreadAmount)/2
+	var iteration = 0
+	for card in cards:
+		card.position = Vector2(startingPos + iteration * (cards[0].size[1]/40 + spreadAmount), 0)
+		iteration += 1
 
 func deactivateGameHandCard(card :Card) -> void:
 	card.position += Vector2(0, -20)
