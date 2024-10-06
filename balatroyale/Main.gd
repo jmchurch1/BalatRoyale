@@ -2,6 +2,12 @@ class_name Main
 extends Node
 
 @export var gameHandSize :int
+@export var playerChipsLabel :RichTextLabel
+@export var playerMultLabel :RichTextLabel
+@export var playerHandLabel :RichTextLabel
+@export var playerOverallScoreLabel : RichTextLabel
+@export var playerHandsLabel :RichTextLabel
+
 @onready var gameHand = get_node("CanvasLayer/GameHand") as Hand
 @onready var multiplayerSpawner = get_node("MultiplayerSpawner") as MultiplayerSpawner
 @onready var playerScene = load("res://player.tscn")
@@ -16,12 +22,20 @@ func _ready() -> void:
 	player.name = "Player_" + String.num_uint64(1)
 	gameHand.player = player
 	get_node("/root/Main/SpawnRoot").add_child(player, true)
+	player.addLabels(playerChipsLabel, playerMultLabel, playerHandLabel, playerOverallScoreLabel, playerHandsLabel)
+	player.addMainReference(self)
 	deck = Deck.new()
 	discardDeck = Deck.new(false)
 	makeHand()
 
+func playerDone() -> void:
+	var discardDeckAdditions = await gameHand.removeAndReturnPlayed()
+	for card in discardDeckAdditions:
+		discardDeck.addCard(card)
+	makeHand()
+
 func makeHand() -> void:
-	for i in range(gameHandSize):
+	for i in range(gameHandSize - gameHand.cards.size()):
 		if (deck.is_empty() && discardDeck.is_empty()):
 			return
 		elif (deck.is_empty()):

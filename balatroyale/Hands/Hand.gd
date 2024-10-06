@@ -26,7 +26,20 @@ func removeCard(card: Card) -> void:
 	var index = cards.find(card)
 	cards[index].queue_free()
 	cards.remove_at(index)
-	
+
+func removeAndReturnPlayed() -> Array[Card]:
+	var returnCards :Array[Card]
+	for card in cards:
+		if (card.played):
+			returnCards.append(card.cardReference())
+			removeCard(card)
+			await get_tree().create_timer(0.2).timeout
+	return returnCards
+
+func removeAllCards() -> void:
+	for card in cards:
+		removeCard(card)
+		await get_tree().create_timer(0.2).timeout
 
 func addCard(card :Card) -> void:
 	if card.value > highCardValue:
@@ -34,9 +47,6 @@ func addCard(card :Card) -> void:
 	if card.value < lowCardValue:
 		lowCard = card
 	
-	var x = cards.size() * spreadAmount
-	
-	card.position = Vector2(x, 0)
 	card.rotation += randf_range(-rotateAmount, rotateAmount)
 	card.scale = Vector2(cardScale, cardScale)
 	

@@ -1,17 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b374ofy5eq3gy"]
+[gd_scene load_steps=3 format=3 uid="uid://b374ofy5eq3gy"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_0ik4s"]
 [ext_resource type="Script" path="res://Hands/Hand.gd" id="2_uc7d2"]
-[ext_resource type="Theme" uid="uid://bpndvpwh3ajbq" path="res://ScoreTheme.tres" id="3_swhim"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_iqlbf"]
-
-[node name="Player" type="Node" node_paths=PackedStringArray("hand", "chipsLabel", "multLabel", "handLabel")]
+[node name="Player" type="Node" node_paths=PackedStringArray("hand")]
 script = ExtResource("1_0ik4s")
 hand = NodePath("CanvasLayer/PlayerHand")
-chipsLabel = NodePath("CanvasLayer/Chips")
-multLabel = NodePath("CanvasLayer/Mult")
-handLabel = NodePath("CanvasLayer/HandType")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -25,47 +19,3 @@ script = ExtResource("2_uc7d2")
 spreadAmount = 100.0
 rotateAmount = 0.05
 cardScale = 0.3
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-modulate = Color(0.0765988, 0.0303336, 0.162972, 1)
-offset_left = 792.0
-offset_top = 319.0
-offset_right = 1102.0
-offset_bottom = 460.0
-texture = SubResource("ViewportTexture_iqlbf")
-
-[node name="Chips" type="RichTextLabel" parent="CanvasLayer"]
-clip_contents = false
-custom_minimum_size = Vector2(50, 0)
-offset_left = 102.0
-offset_top = 549.0
-offset_right = 239.0
-offset_bottom = 637.0
-pivot_offset = Vector2(34, 30)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("3_swhim")
-
-[node name="Mult" type="RichTextLabel" parent="CanvasLayer"]
-clip_contents = false
-custom_minimum_size = Vector2(50, 0)
-offset_left = 349.0
-offset_top = 548.0
-offset_right = 476.0
-offset_bottom = 627.0
-pivot_offset = Vector2(34, 30)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("3_swhim")
-
-[node name="HandType" type="RichTextLabel" parent="CanvasLayer"]
-clip_contents = false
-custom_minimum_size = Vector2(50, 0)
-offset_left = 137.0
-offset_top = 480.0
-offset_right = 361.0
-offset_bottom = 581.0
-pivot_offset = Vector2(34, 30)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("3_swhim")

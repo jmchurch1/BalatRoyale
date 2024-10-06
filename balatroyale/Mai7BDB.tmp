@@ -7,20 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://c423v5kin3joa" path="res://PinkStake.png" id="5_iaodn"]
 [ext_resource type="Texture2D" uid="uid://b2d8vrq3wugvi" path="res://TuckerBlind.png" id="6_yqjht"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("playerChipsLabel", "playerMultLabel", "playerHandLabel", "playerOverallScoreLabel", "playerHandsLabel")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("playerChipsLabel", "playerMultLabel", "playerHandLabel", "playerOverallScoreLabel")]
 script = ExtResource("1_kifpx")
 gameHandSize = 25
 playerChipsLabel = NodePath("CanvasLayer/PlayerScoreInfoPanel/Chips")
 playerMultLabel = NodePath("CanvasLayer/PlayerScoreInfoPanel/Mult")
 playerHandLabel = NodePath("CanvasLayer/PlayerScoreInfoPanel/HandInfo")
 playerOverallScoreLabel = NodePath("CanvasLayer/PersonalScorePanel/PlayerScore")
-playerHandsLabel = NodePath("CanvasLayer/HandsPanel/Hands")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
-visible = false
 position = Vector2(-0.103449, 0.0295569)
 scale = Vector2(1.78813, 1.78813)
 texture = ExtResource("2_uohgl")
