@@ -151,22 +151,8 @@ func checkStraightFlush(hand :Hand) -> bool:
 	# check that all the cards are the same suit or wild
 	if (!checkSameSuit(hand)):
 		return false
-	# check the cards are all in order
-	var copyCards = hand.cards.duplicate()
-	copyCards.remove_at(copyCards.find(hand.lowCard))
-	var iterations = 1
-	while true:
-		if (iterations >= 5):
-			return true
-		var nextValue = hand.lowCardValue + iterations
-		var foundNextValue = false
-		for card in copyCards:
-			if(card.value == nextValue):
-				foundNextValue = true
-		if (!foundNextValue):
-			return false
-		iterations += 1
-	return true
+	
+	return checkStraight(hand)
 
 func checkFullHouse(hand :Hand) -> bool:
 	var removedRank = Enums.CardValues.UNINITIALIZED
@@ -193,17 +179,29 @@ func checkFlush(hand :Hand) -> bool:
 func checkStraight(hand :Hand) -> bool:
 	# check the cards are all in order
 	var copyCards = hand.cards.duplicate()
-	copyCards.remove_at(copyCards.find(hand.lowCard))
 	var iterations = 1
+	# if we start at two then we need an ACE
+	var foundAceWithTwo = false
+	if (hand.lowCard.order == Enums.CardOrder.TWO):
+		for card in hand.cards:
+			if (card.type == Enums.CardTypes.ACE):
+				foundAceWithTwo = true
+				break
+		if (!foundAceWithTwo && hand.cards.size() <= 5):
+			return false
+	
+	copyCards.remove_at(copyCards.find(hand.lowCard))
 	while true:
-		if (iterations >= 5):
+		if (foundAceWithTwo && iterations >= 4):
 			return true
-		var nextValue = hand.lowCardValue + iterations
-		var foundNextValue = false
+		elif (iterations >= 5):
+			return true
+		var nextOrder = hand.lowCardOrder + iterations
+		var foundNextOrder = false
 		for card in copyCards:
-			if(card.value == nextValue):
-				foundNextValue = true
-		if (!foundNextValue):
+			if(card.order == nextOrder):
+				foundNextOrder = true
+		if (!foundNextOrder):
 			return false
 		iterations += 1
 	return true

@@ -27,6 +27,7 @@ func _ready() -> void:
 	deck = Deck.new()
 	discardDeck = Deck.new(false)
 	makeHand()
+	player.addButtonReferences()
 
 func playerDone() -> void:
 	var discardDeckAdditions = await gameHand.removeAndReturnPlayed()

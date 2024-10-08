@@ -2,6 +2,9 @@ class_name Player
 extends Node
 
 @export var hand :Hand
+@export var buttonPlay :Button
+@export var buttonDiscard :Button
+
 var main :Main
 var chipsLabel :RichTextLabel
 var multLabel :RichTextLabel
@@ -18,8 +21,9 @@ var minJokers = 0
 var maxHandsRemaining = 5
 var currentHandsRemaining = 5
 var money = 0
-var mult = 1.0
+var mult = 0.0
 var chips = 0
+var overallScore = 0
 
 func _init() -> void:
 	handManager = Hands.new()
@@ -35,6 +39,11 @@ func addLabels(chipsLabel :RichTextLabel, multLabel :RichTextLabel,
 	self.overallScoreLabel = overallScoreLabel
 	self.handsRemainingLabel = handsRemainingLabel
 
+func addButtonReferences() -> void:
+	#buttonPlay.pressed.connect(await playHand())
+	#buttonDiscard.pressed.connect(await discardHand())
+	pass
+
 func scoreHand():
 	var handScore = handManager.findBestHand(hand)
 	chips += handScore[0]
@@ -49,9 +58,28 @@ func scoreHand():
 	currentHandsRemaining -= 1
 	handsRemainingLabel.clear()
 	handsRemainingLabel.add_text(String.num_int64(currentHandsRemaining))
+	
+	overallScore += chips * mult
+	overallScoreLabel.add_text(String.num_scientific(overallScore))
+	chips = 0
+	mult = 0
+	
 	if (currentHandsRemaining != 0):
-		main.playerDone()
-		hand.removeAllCards()
+		await hand.removeAllCards()
+		await main.playerDone()
+
+func discardHand():
+	if (null == hand):
+		return
+	await hand.removeAllCards()
+	await main.playerDone()
+
+func playHand():
+	if (null == hand):
+		return
+	await scoreHand()
+	await hand.removeAllCards()
+	await main.playerDone()
 
 func addScore(cardScore :CardScore) -> void:
 	money = cardScore.money
@@ -62,9 +90,7 @@ func addScore(cardScore :CardScore) -> void:
 	overallScoreLabel.clear()
 	chipsLabel.add_text(String.num_int64(cardScore.value))
 	multLabel.add_text(String.num(mult))
-	overallScoreLabel.add_text(String.num_scientific(chips * mult))
 	var return_string = "%s X %s \n Money: %s"
-	print(return_string % [String.num_int64(chips), String.num(mult), String.num_int64(money)])
 
 func addJoker(joker: Joker) -> void:
 	print(joker.to_string())
@@ -80,9 +106,6 @@ func addCard(card: Card) -> void:
 		[Enums.HandTypes.find_key(bestHand), \
 		String.num_int64(handManager.handLevels.get(bestHand))]
 	handLabel.add_text(handText)
-	
-	if (hand.cards.size() == maxCards):
-		scoreHand()
 
 func removeCard(card: Card) -> void:
 	var playerCard = hand.contains(card)

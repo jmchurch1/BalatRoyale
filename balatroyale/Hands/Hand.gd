@@ -8,9 +8,9 @@ extends Node
 var player :Player
 var parentObject :Node 
 var cards :Array[Card]
-var highCardValue = -9223372036854775808
+var highCardOrder = -9223372036854775808
 var highCard :Card
-var lowCardValue = 9223372036854775807
+var lowCardOrder = 9223372036854775807
 var lowCard :Card
 
 func _init(newCards=[]) -> void:
@@ -21,9 +21,10 @@ func addCards(newCards :Array[Card]) -> void:
 	for card in newCards:
 		addCard(card)
 
-#NOTE: need to do some sprite removal here
 func removeCard(card: Card) -> void:
+	print(card.to_string())
 	var index = cards.find(card)
+	print("tried to remove card %d" % index)
 	cards[index].queue_free()
 	cards.remove_at(index)
 
@@ -37,15 +38,20 @@ func removeAndReturnPlayed() -> Array[Card]:
 	return returnCards
 
 func removeAllCards() -> void:
+	self.highCardOrder = -9223372036854775808
+	self.lowCardOrder = 9223372036854775807
 	for card in cards:
-		removeCard(card)
+		card.queue_free()
 		await get_tree().create_timer(0.2).timeout
+	cards.clear()
 
 func addCard(card :Card) -> void:
-	if card.value > highCardValue:
+	if card.order > highCardOrder:
 		highCard = card
-	if card.value < lowCardValue:
+		highCardOrder = card.order
+	if card.order < lowCardOrder:
 		lowCard = card
+		lowCardOrder = card.order
 	
 	card.rotation += randf_range(-rotateAmount, rotateAmount)
 	card.scale = Vector2(cardScale, cardScale)

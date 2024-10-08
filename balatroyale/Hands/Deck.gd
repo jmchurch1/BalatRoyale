@@ -9,7 +9,7 @@ func _init(full_deck=true) -> void:
 
 func populateFullDeck() -> void:
 	for i in range(0, 3):
-		for j in range(2, 10):
+		for j in range(Enums.CardValues.TWO, Enums.CardValues.TEN):
 			addCard(Card.new(j, i, Enums.CardAttributes.BASE, Enums.CardTypes.BASE, Enums.CardEditions.BASE, Enums.CardSeals.BASE))
 		addCard(Card.new(Enums.CardValues.ELEVEN, i, Enums.CardAttributes.BASE, Enums.CardTypes.ACE, Enums.CardEditions.BASE, Enums.CardSeals.BASE))
 		addCard(Card.new(Enums.CardValues.TEN, i, Enums.CardAttributes.BASE, Enums.CardTypes.FACE, Enums.CardEditions.BASE, Enums.CardSeals.BASE, Enums.FaceCards.JACK))

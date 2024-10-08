@@ -19,8 +19,8 @@ enum CardTypes {
 }
 
 enum CardValues {
-	UNINITIALIZED, 
-	ONE, 
+	NULL,
+	UNINITIALIZED,  
 	TWO, 
 	THREE, 
 	FOUR, 
@@ -31,6 +31,24 @@ enum CardValues {
 	NINE, 
 	TEN,
 	ELEVEN
+}
+
+enum CardOrder {
+	NULL,
+	UNININITALIZED,
+	TWO,
+	THREE,
+	FOUR,
+	FIVE,
+	SIX,
+	SEVEN,
+	EIGHT,
+	NINE,
+	TEN,
+	JACK,
+	QUEEN,
+	KING,
+	ACE
 }
 
 enum FaceCards {
@@ -142,5 +160,4 @@ enum Parents {
 	PLAYER_TWO,
 	PLAYER_THREE,
 	PLAYER_FOUR
-	
 }

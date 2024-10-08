@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://b374ofy5eq3gy"]
+[gd_scene load_steps=5 format=3 uid="uid://b374ofy5eq3gy"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_0ik4s"]
 [ext_resource type="Script" path="res://Hands/Hand.gd" id="2_uc7d2"]
+[ext_resource type="Script" path="res://Buttons/Discard.gd" id="3_1laag"]
+[ext_resource type="Script" path="res://Buttons/Play.gd" id="3_cqyku"]
 
-[node name="Player" type="Node" node_paths=PackedStringArray("hand")]
+[node name="Player" type="Node" node_paths=PackedStringArray("hand", "buttonPlay", "buttonDiscard")]
 script = ExtResource("1_0ik4s")
 hand = NodePath("CanvasLayer/PlayerHand")
+buttonPlay = NodePath("CanvasLayer/Play")
+buttonDiscard = NodePath("CanvasLayer/Discard")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -19,3 +23,21 @@ script = ExtResource("2_uc7d2")
 spreadAmount = 100.0
 rotateAmount = 0.05
 cardScale = 0.3
+
+[node name="Discard" type="Button" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+offset_left = 1028.0
+offset_top = 1015.0
+offset_right = 1114.0
+offset_bottom = 1046.0
+text = "Discard"
+script = ExtResource("3_1laag")
+player = NodePath("../..")
+
+[node name="Play" type="Button" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+offset_left = 881.0
+offset_top = 1015.0
+offset_right = 967.0
+offset_bottom = 1046.0
+text = "Play Hand"
+script = ExtResource("3_cqyku")
+player = NodePath("../..")

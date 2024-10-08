@@ -13,6 +13,7 @@ var attribute: Enums.CardAttributes
 var value: Enums.CardValues
 var suit: Enums.CardSuits
 var faceCard: Enums.FaceCards
+var order: Enums.CardOrder
 var button: TextureButton
 
 """
@@ -24,6 +25,9 @@ var button: TextureButton
 @param newSeal :Enums.CardSeals
 """
 func _init(newValue, newSuit, newAttribute, newType, newEdition, newSeal, newFaceCard=Enums.FaceCards.UNINITIALIZED):
+	if (newType == Enums.CardTypes.FACE && newFaceCard == Enums.FaceCards.UNINITIALIZED):
+		push_error("Tried to make a face card with an uninitialized newFaceCard value")
+	
 	value = newValue
 	suit = newSuit
 	attribute = newAttribute
@@ -35,6 +39,18 @@ func _init(newValue, newSuit, newAttribute, newType, newEdition, newSeal, newFac
 	played = false
 	dead = false
 	redSealTriggered = false
+	if newType == Enums.CardTypes.BASE:
+		order = Enums.CardOrder.values()[newValue]
+	elif newType == Enums.CardTypes.ACE:
+		order = Enums.CardOrder.ACE
+	else:
+		match newFaceCard:
+			Enums.FaceCards.JACK:
+				order = Enums.CardOrder.JACK
+			Enums.FaceCards.QUEEN:
+				order = Enums.CardOrder.QUEEN
+			Enums.FaceCards.KING:
+				order = Enums.CardOrder.KING
 
 """
 score
